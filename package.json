@@ -5,10 +5,13 @@
     "scripts": {
         "start": "vue-cli-service serve --open --copy",
         "build": "vue-cli-service build --modern",
-        "lint": "vue-cli-service lint"
+        "lint": "vue-cli-service lint",
+        "new-module": "node src/script/new-module.js"
     },
     "dependencies": {
         "axios": "^0.18.0",
+        "fs": "^0.0.1-security",
+        "postcss-px-to-viewport": "^0.0.3",
         "register-service-worker": "^1.0.0",
         "vue": "^2.5.17",
         "vue-class-component": "^6.0.0",
