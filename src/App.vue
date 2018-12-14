@@ -9,9 +9,14 @@
     </div>
 </template>
 
+<script>
+    import '../src/style/reset.css';
+
+    export default {};
+</script>
+
 <style lang="scss">
     #app {
-        font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Hiragino Sans", Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;

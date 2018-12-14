@@ -49,7 +49,7 @@ Object.keys(apis).forEach((key: string) => {
      */
     function request(restful: any, params: object) {
 
-        if (config.restful) {
+        if (config.restful && !config.transform) {
             const match = config.url.match(/(?<=\{)[^\}]+/g);
 
             if (match && match.length > 0) {
@@ -61,6 +61,7 @@ Object.keys(apis).forEach((key: string) => {
                         cancel(`${key} 请求中 ${str} 参数未注入`);
                     } else {
                         config.url = config.url.replace(`{${str}}`, restful[str]);
+                        config.transform = true;
                     }
                 });
             } else {
@@ -69,7 +70,7 @@ Object.keys(apis).forEach((key: string) => {
                 config.cancelToken = new CancelToken((c) => cancel = c);
                 cancel('你似乎并不需要 restful 风格，请删除 restful:true，或赋值为 false');
             }
-        } else {
+        } else if (!config.restful && !config.transform) {
             params = restful;
         }
 
