@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 
 let arguments = process.argv.splice(2);
-let dirArr = ['assets', 'components', 'pages'];
+let dirArr = ['assets', 'components', 'views'];
 let configArr = ['apis', 'routes'];
 let content = '';
 fs.mkdirSync(`src/modules/${arguments}`);

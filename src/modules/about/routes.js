@@ -1,4 +1,4 @@
-const about = () => import(/* webpackChunkName: "about" */ '../../views/About.vue');
+const about = () => import(/* webpackChunkName: "about" */ './views/About.vue');
 
 export default [
     {

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 
 const CancelToken = axios.CancelToken;
 
@@ -31,14 +31,15 @@ Axios.interceptors.request.use(
 );
 
 
-let apis: any = {};
+let apis: AxiosRequestConfig = {};
 const context = require.context(`./modules`, true, /apis\.js$/);
-context.keys().forEach((key) => {
+context.keys().forEach((key: string) => {
     const {default: api} = context(key);
     apis = Object.assign(apis, api);
 });
 
 Object.keys(apis).forEach((key: string) => {
+    // @ts-ignore
     const config = apis[key];
 
     /**
@@ -85,6 +86,7 @@ Object.keys(apis).forEach((key: string) => {
         return Axios.request(config);
     }
 
+    // @ts-ignore
     apis[key] = request;
 });
 

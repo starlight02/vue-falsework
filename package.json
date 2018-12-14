@@ -6,7 +6,7 @@
         "start": "vue-cli-service serve --open --copy",
         "build": "vue-cli-service build --modern",
         "lint": "vue-cli-service lint",
-        "new-module": "node src/script/new-module.js"
+        "module": "node src/script/new-module.js"
     },
     "dependencies": {
         "axios": "^0.18.0",
