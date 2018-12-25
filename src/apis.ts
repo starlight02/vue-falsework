@@ -1,8 +1,15 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import Axios, { AxiosRequestConfig } from 'axios';
 
-const CancelToken = axios.CancelToken;
+interface ApisConfig extends AxiosRequestConfig {
+    url: string;
+    method?: string;
+    restful?: boolean;
+    transform?: boolean;
+}
 
-const Axios = axios.create({
+const CancelToken = Axios.CancelToken;
+
+const axios = Axios.create({
     baseURL: '/',
     responseType: 'json',
     withCredentials: true,
@@ -15,23 +22,18 @@ const Axios = axios.create({
     },
 });
 
-// 请求拦截器
-Axios.interceptors.request.use(
-    (config) => {
-        /*FIXME*/
-        const token = 'qqq';
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    },
-);
+axios.interceptors.request.use(config => {
+    /*FIXME*/
+    const token = 'qqq';
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
 
-
-let apis: AxiosRequestConfig = {};
+let apis: any = {};
 const context = require.context(`./modules`, true, /apis\.js$/);
 context.keys().forEach((key: string) => {
     const {default: api} = context(key);
@@ -39,9 +41,9 @@ context.keys().forEach((key: string) => {
 });
 
 Object.keys(apis).forEach((key: string) => {
-    // @ts-ignore
-    const config = apis[key];
-
+    
+    const config: ApisConfig = apis[key];
+    
     /**
      * 实际发送请求的方法
      * @param restful   restful 参数，在使用 restful 风格的 URL 时需要
@@ -49,44 +51,43 @@ Object.keys(apis).forEach((key: string) => {
      * @return {Promise}
      */
     function request(restful: any, params: object) {
-
-        if (config.restful && !config.transform) {
-            const match = config.url.match(/(?<=\{)[^\}]+/g);
-
-            if (match && match.length > 0) {
-                match.forEach((str: string) => {
-                    if (!restful || (typeof restful) !== 'object' || !Object.keys(restful).includes(str)) {
-                        let cancel = (message: string) => {
-                        };
-                        config.cancelToken = new CancelToken((c) => cancel = c);
-                        cancel(`${key} 请求中 ${str} 参数未注入`);
-                    } else {
-                        config.url = config.url.replace(`{${str}}`, restful[str]);
-                        config.transform = true;
-                    }
-                });
-            } else {
-                let cancel = (message: string) => {
-                };
-                config.cancelToken = new CancelToken((c) => cancel = c);
-                cancel('你似乎并不需要 restful 风格，请删除 restful:true，或赋值为 false');
+    
+        if (!config.transform) {
+            if (config.restful) {
+                const match = config.url.match(/(?<=\{)[^\}]+/g);
+            
+                if (match && match.length > 0) {
+                    match.forEach((str: string) => {
+                        if (!restful || (typeof restful) !== 'object' || !Object.keys(restful).includes(str)) {
+                            let cancel = (message: string) => {
+                            };
+                            config.cancelToken = new CancelToken(c => cancel = c);
+                            cancel(`${key} 请求中 ${str} 参数未注入`);
+                        } else {
+                            config.url = config.url.replace(`{${str}}`, restful[str]);
+                        }
+                    });
+                    config.transform = true;
+                } else {
+                    let cancel = (message: string) => {
+                    };
+                    config.cancelToken = new CancelToken(c => cancel = c);
+                    cancel('你似乎并不需要 restful 风格，请删除 restful:true，或赋值为 false');
+                }
             }
-        } else if (!config.restful && !config.transform) {
-            params = restful;
+        
+            const parameter = !params ? restful : params;
+            config.method = config.method || 'get';
+            if (config.method === 'get' || config.method === 'delete') {
+                config.params = parameter;
+            } else if (config.method === 'post' || config.method === 'put' || config.method === 'patch') {
+                config.data = parameter;
+            }
         }
-
-        const parameter = !params ? restful : params;
-        config.method = config.method || 'get';
-        if (config.method === 'get' || config.method === 'delete') {
-            config.params = parameter;
-        } else if (config.method === 'post' || config.method === 'put' || config.method === 'patch') {
-            config.data = parameter;
-        }
-
+        
         return Axios.request(config);
     }
-
-    // @ts-ignore
+    
     apis[key] = request;
 });
 

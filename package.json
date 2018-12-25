@@ -9,10 +9,14 @@
         "module": "node src/script/new-module.js"
     },
     "dependencies": {
+        "@types/nprogress": "^0.0.29",
         "axios": "^0.18.0",
         "fs": "^0.0.1-security",
+        "mockjs": "^1.0.1-beta3",
+        "nprogress": "^0.2.0",
         "postcss-px-to-viewport": "^0.0.3",
         "register-service-worker": "^1.0.0",
+        "tslint-config-alloy": "^0.2.1",
         "vue": "^2.5.17",
         "vue-class-component": "^6.0.0",
         "vue-property-decorator": "^7.0.0",

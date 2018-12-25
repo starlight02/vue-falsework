@@ -1,18 +1,37 @@
 import Vue from 'vue';
-import Router, {RouteConfig} from 'vue-router';
+import Component from 'vue-class-component';
+import Router, { RouteConfig } from 'vue-router';
+
+import np from 'nprogress';
+
+Component.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'beforeRouteUpdate',
+]);
 
 Vue.use(Router);
 
 let routeList: RouteConfig[] = [];
 const context = require.context(`./modules`, true, /routes\.js$/);
 context.keys().forEach(r => {
-    const {default: route} = context(r);
-    routeList = routeList.concat(route);
+    const {default: routes} = context(r);
+    routeList = routeList.concat(routes);
 });
 
 routeList.push({path: '/', redirect: {name: 'home'}});
 const router = new Router({
+    mode: 'history',
     routes: routeList,
+});
+
+router.beforeResolve((to, from, next) => {
+    np.start();
+    next();
+});
+
+router.afterEach((to, from) => {
+    np.done();
 });
 
 export default router;

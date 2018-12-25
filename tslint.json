@@ -1,19 +1,50 @@
 {
     "defaultSeverity": "warning",
     "extends": [
-        "tslint:recommended"
+        "tslint-config-alloy"
     ],
     "linterOptions": {
         "exclude": [
             "node_modules/**"
         ]
     },
+    //    "rulesDirectory": [
+    //        "node_modules/tslint-eslint-rules/dist/rules"
+    //    ],
     "rules": {
         "quotemark": [true, "single"],
         "indent": [true, "spaces", 4],
         "interface-name": false,
         "ordered-imports": false,
         "object-literal-sort-keys": false,
-        "no-consecutive-blank-lines": false
+        "member-ordering": false,
+        "no-consecutive-blank-lines": false,
+        // 禁止给类的构造函数的参数添加修饰符
+        "no-parameter-properties": false,
+        "triple-equals": false,
+        "prefer-object-spread": false,
+        "no-magic-numbers": false,
+        "no-debugger": false,
+        // 禁止行尾有空格
+        "no-trailing-whitespace": false,
+        "no-this-assignment": [true, {"allowed-names": ["^self$", "^that$"], "allow-destructuring": true}],
+        // 必须使用箭头函数，除非是单独的函数声明或是命名函数
+        "only-arrow-functions": [
+            false,
+            "allow-declarations",
+            "allow-named-functions"
+        ],
+        // 禁止出现空代码块，允许 catch 是空代码块
+        "no-empty": [false, "allow-empty-catch"],
+        // 禁止无用的类型断言
+        "no-unnecessary-type-assertion": false,
+        // 使用 return; 而不是 return undefined;
+        "return-undefined": false,
+        // 禁止对 array 使用 for in 循环
+        "no-for-in-array": false,
+        // 单行注释格式化规则
+        "no-import-side-effect": false,
+        "comment-format": [true, "check-space"],
+        "arrow-parens": false
     }
 }

@@ -10,9 +10,15 @@
 </template>
 
 <script>
-    import '../src/style/reset.css';
+    import {Component, Vue} from 'vue-property-decorator';
 
-    export default {};
+
+    import '../src/style/reset.css';
+    import 'nprogress/nprogress.css';
+
+    @Component
+    export default class App extends Vue {
+    }
 </script>
 
 <style lang="scss">
