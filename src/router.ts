@@ -2,8 +2,6 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 import Router, { RouteConfig } from 'vue-router';
 
-import np from 'nprogress';
-
 Component.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -25,13 +23,17 @@ const router = new Router({
     routes: routeList,
 });
 
+router.beforeEach((to, from, next) => {
+    // np.start();
+    next();
+});
+
 router.beforeResolve((to, from, next) => {
-    np.start();
     next();
 });
 
 router.afterEach((to, from) => {
-    np.done();
+    // np.done();
 });
 
 export default router;

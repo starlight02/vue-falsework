@@ -12,9 +12,7 @@
 <script>
     import {Component, Vue} from 'vue-property-decorator';
 
-
     import '../src/style/reset.css';
-    import 'nprogress/nprogress.css';
 
     @Component
     export default class App extends Vue {

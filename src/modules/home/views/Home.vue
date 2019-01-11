@@ -15,8 +15,13 @@
             HelloWorld,
         },
         beforeRouteEnter(to, from, next: any) {
-            next((vm: Home) => {
+            window.np.start();
+            next(async (vm: Home) => {
                 vm.getTestData();
+                await new Promise((resolve) => {
+                    setTimeout(() => resolve(), 5000);
+                });
+                window.np.done();
             });
         },
     })
@@ -26,6 +31,7 @@
 
         //computed
         get message1() {
+
             return '';
         }
 
@@ -33,18 +39,15 @@
         @Prop({type: [String, Number], default: 'ni hao'}) private message3!: string | number;
 
         //methods
-        getTestData(): void {
-            this.$apis.getTest({userId: 1, id: 2}, {name: 'Tom'})
-            .then((data: object) => {
-                console.log(data);
-            })
-            .catch((e: any) => {
-                Promise.reject(e);
-            });
-        }
+        getTestData() {
 
-        mounted() {
-            console.log(this.message);
+            this.$api.getTest({userId: 1, id: 2}, {name: 'Tom'})
+            .then((data) => {
+                console.log(data);
+            }).catch(e => {
+                console.log(this.$api);
+                // Promise.reject(e);
+            });
         }
     }
 </script>

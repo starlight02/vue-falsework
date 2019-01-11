@@ -45,6 +45,7 @@
         // 单行注释格式化规则
         "no-import-side-effect": false,
         "comment-format": [true, "check-space"],
-        "arrow-parens": false
+        "arrow-parens": false,
+        "trailing-comma": false
     }
 }

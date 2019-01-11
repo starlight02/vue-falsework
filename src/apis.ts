@@ -1,10 +1,18 @@
-import Axios, { AxiosRequestConfig } from 'axios';
+import Axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 
 interface ApisConfig extends AxiosRequestConfig {
     url: string;
     method?: string;
     restful?: boolean;
     transform?: boolean;
+}
+
+export interface ApisConfigObject {
+    [key: string]: ApisConfig;
+}
+
+export interface Apis {
+    [key: string]: (restful: any, params?: Object) => AxiosPromise<any>;
 }
 
 const CancelToken = Axios.CancelToken;
@@ -33,16 +41,17 @@ axios.interceptors.request.use(config => {
     return Promise.reject(error);
 });
 
-let apis: any = {};
+let apisConfig: ApisConfigObject = {};
+const apis: Apis = {};
+
 const context = require.context(`./modules`, true, /apis\.js$/);
 context.keys().forEach((key: string) => {
     const {default: api} = context(key);
-    apis = Object.assign(apis, api);
+    apisConfig = Object.assign(apisConfig, api);
 });
 
-Object.keys(apis).forEach((key: string) => {
-    
-    const config: ApisConfig = apis[key];
+Object.keys(apisConfig).forEach((key: string) => {
+    const config: ApisConfig = apisConfig[key];
     
     /**
      * 实际发送请求的方法
@@ -50,12 +59,12 @@ Object.keys(apis).forEach((key: string) => {
      * @param params    请求参数
      * @return {Promise}
      */
-    function request(restful: any, params: object) {
-    
+    function request(restful: any, params?: object) {
+        
         if (!config.transform) {
             if (config.restful) {
                 const match = config.url.match(/(?<=\{)[^\}]+/g);
-            
+
                 if (match && match.length > 0) {
                     match.forEach((str: string) => {
                         if (!restful || (typeof restful) !== 'object' || !Object.keys(restful).includes(str)) {
@@ -75,7 +84,7 @@ Object.keys(apis).forEach((key: string) => {
                     cancel('你似乎并不需要 restful 风格，请删除 restful:true，或赋值为 false');
                 }
             }
-        
+
             const parameter = !params ? restful : params;
             config.method = config.method || 'get';
             if (config.method === 'get' || config.method === 'delete') {
