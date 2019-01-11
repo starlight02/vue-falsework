@@ -70,11 +70,11 @@ export default class Socket extends SocketEvent {
 
         //成功连接
         webSocket.addEventListener('open', (event) => {
-            webSocket.on('HEART_BEAT', ({data}) => {
+            webSocket.on('💗', (data) => {
                 //    TODO
             });
             console.log('%cwebsocket 已连接', 'font-size:14px;color:#87d068;');
-            webSocket.emit('HEART_BEAT');
+            webSocket.send('💗');
         });
 
         //连接已关闭
@@ -97,7 +97,7 @@ export default class Socket extends SocketEvent {
                 socketMessage = JSON.parse(message);
             } catch (e) {
                 console.warn('数据解析错误: ', e);
-                socketMessage = message;
+                socketMessage = {type: message};
             }
             if (!socketMessage.type) {
                 socketMessage.type = '';
@@ -127,24 +127,6 @@ export default class Socket extends SocketEvent {
                 }, 0);
             } else {
                 console.warn('websocket 连接已关闭，消息发送取消');
-            }
-        };
-
-        //socket 封装直接发送消息方法
-        webSocket.sendMessage = (data) => {
-            let message = '';
-            try {
-                message = JSON.stringify(data);
-            } catch (e) {
-                console.warn('数据序列化错误: ', e);
-                message = data;
-            }
-
-            try {
-                webSocket.send(message);
-            } catch (e) {
-                console.log('websocket error:', e);
-                throw new Error(e);
             }
         };
 

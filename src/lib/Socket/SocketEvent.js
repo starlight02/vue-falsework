@@ -30,7 +30,6 @@ export default class SocketEvent {
     trigger(data) {
         const eventName = data.type;
         const fooList = this.event[eventName];
-        console.log('success callback...:', eventName, this.event[eventName]);
         if (!fooList || !fooList.length) {
             return;
         }
