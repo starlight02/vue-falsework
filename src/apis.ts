@@ -52,20 +52,21 @@ context.keys().forEach((key: string) => {
 
 Object.keys(apisConfig).forEach((key: string) => {
     const config: ApisConfig = apisConfig[key];
-    
+
     /**
      * 实际发送请求的方法
      * @param restful   restful 参数，在使用 restful 风格的 URL 时需要
      * @param params    请求参数
      */
     function request(restful: any, params?: object) {
-        
+
         if (!config.transform) {
             if (config.restful) {
-                const match = config.url.match(/(?<=\{)[^\}]+/g);
+                const match = config.url.match(/{[^{}]+}/g);
 
                 if (match && match.length > 0) {
                     match.forEach((str: string) => {
+                        str = str.replace('{', '').replace('}', '');
                         if (!restful || (typeof restful) !== 'object' || !Object.keys(restful).includes(str)) {
                             let cancel = (message: string) => {
                             };
@@ -92,10 +93,10 @@ Object.keys(apisConfig).forEach((key: string) => {
                 config.data = parameter;
             }
         }
-        
+
         return Axios.request(config);
     }
-    
+
     apis[key] = request;
 });
 

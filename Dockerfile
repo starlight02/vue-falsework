@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . /app
 RUN yarn && yarn build
 
-FROM nginx:latest-alpine
+FROM nginx:latest
 COPY --from=builder /app/dist /var/www/html
 COPY ./custom.conf /etc/nginx/conf.d/ 
 RUN rm /etc/nginx/conf.d/default.conf
