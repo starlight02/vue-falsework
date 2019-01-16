@@ -57,7 +57,6 @@ Object.keys(apisConfig).forEach((key: string) => {
      * 实际发送请求的方法
      * @param restful   restful 参数，在使用 restful 风格的 URL 时需要
      * @param params    请求参数
-     * @return {Promise}
      */
     function request(restful: any, params?: object) {
         
