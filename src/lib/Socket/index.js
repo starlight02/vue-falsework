@@ -43,18 +43,16 @@ export default class Socket extends SocketEvent {
         const maximum = this.option.maxConnectCount || 1;
 
         if (this.count >= maximum) {
-            console.warn('websocket 无法正确连接，请检查链接地址或服务器');
+            console.warn('websocket 无法正确连接，请检查链接地址、网络或服务器');
             return null;
         }
-        let ws = new WebSocket(option.url);
-        ws.addEventListener('open', event => {
-            console.log('%cwebsocket 已连接', 'font-size:14px;color:#87d068;');
-            return ws;
-        });
-        ws.addEventListener('error', (event) => {
-            this.count++;
-            return this.reconnect(option);
-        });
+        console.log('正在重连...');
+        this.socket = new WebSocket(option.url);
+        this.addEvent(this.socket);
+        this.socket.onopen = () => {
+            console.log('%cwebsocket 已重新连接', 'font-size:14px;color:#87d068;');
+        };
+        return this.socket;
     }
 
     connect() {
@@ -64,17 +62,18 @@ export default class Socket extends SocketEvent {
             throw new Error('websocket 链接不合法');
         }
 
-        let webSocket = new WebSocket(option.url);
-        this.socket = webSocket;
+        this.socket = new WebSocket(option.url);
         console.info('%cwebsocket 连接中...', 'font-size:14px;color:#147ff4;');
+        this.addEvent(this.socket);
+        return this.socket;
+    }
+
+    addEvent(webSocket) {
 
         //成功连接
         webSocket.addEventListener('open', (event) => {
-            webSocket.on('💗', (data) => {
-                //    TODO
-            });
             console.log('%cwebsocket 已连接', 'font-size:14px;color:#87d068;');
-            webSocket.send('💗');
+            // webSocket.emit('HEART_BEAT');
         });
 
         //连接已关闭
@@ -86,7 +85,8 @@ export default class Socket extends SocketEvent {
         webSocket.addEventListener('error', (event) => {
             console.error('%cwebsocket 发生错误', 'font-size:14px', event);
             console.log('%c正在尝试重新连接...', 'font-size:14px');
-            webSocket = this.reconnect(option);
+            this.count++;
+            webSocket = this.reconnect(this.option);
         });
 
         //监听消息
@@ -126,7 +126,8 @@ export default class Socket extends SocketEvent {
                     }
                 }, 0);
             } else {
-                console.warn('websocket 连接已关闭，消息发送取消');
+                this.count = 0;
+                webSocket = this.reconnect(this.option);
             }
         };
 
@@ -150,7 +151,6 @@ export default class Socket extends SocketEvent {
         window.addEventListener('offline', e => {
             if (webSocket) {
                 if (webSocket.readyState !== WebSocket.OPEN) {
-                    console.warn('%c网络离线，websocket 连接已断开', 'font-size:14px;');
                     return;
                 }
                 webSocket.close();
@@ -159,16 +159,15 @@ export default class Socket extends SocketEvent {
 
         //网络连接时
         window.addEventListener('online', e => {
-            if (webSocket.readyState === WebSocket.OPEN) {
-                //心跳
-                webSocket.emit('HEART_BEAT');
-                return;
+            if (webSocket) {
+                if (webSocket.readyState === WebSocket.OPEN) {
+                    webSocket.emit('HEART_BEAT');
+                    return;
+                }
+                webSocket.close();
             }
-            webSocket.close();
-            webSocket = this.reconnect(option);
+            webSocket = this.reconnect(this.option);
         });
 
-
-        return this.socket;
     }
 }
