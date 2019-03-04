@@ -25,7 +25,7 @@ const axios = Axios.create({
         'Accept': 'application/json',
         'Content-Type': 'application/json',
     },
-    validateStatus: (status) => {
+    validateStatus: status => {
         return (status >= 200 && status < 300) || status === 304;
     },
 });
@@ -59,14 +59,13 @@ Object.keys(apisConfig).forEach((key: string) => {
      * @param params    请求参数
      */
     function request(restful: any, params?: object) {
-
         if (!config.transform) {
             if (config.restful) {
                 const match = config.url.match(/{[^{}]+}/g);
 
                 if (match && match.length > 0) {
                     match.forEach((str: string) => {
-                        str = str.replace('{', '').replace('}', '');
+                        str = str.slice(1, -1);
                         if (!restful || (typeof restful) !== 'object' || !Object.keys(restful).includes(str)) {
                             let cancel = (message: string) => {
                             };

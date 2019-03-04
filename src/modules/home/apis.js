@@ -1,6 +1,6 @@
 export default {
     getTest: {
-        url: '/user/{userId}/info/{id}',
+        url: '/user/{userId}/info/{id}?sb=ni&from=hhh',
         restful: true
     },
     postTest: {

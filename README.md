@@ -22,5 +22,5 @@ yarn lint
 
 ### Run on Docker
 ```bash
-docker build -t vue-falsework:0.0.1 . && docker run -p 80:80 --name vue-demo vue-test:0.0.1 
+docker build -t vue-falsework:0.0.1 . && docker run -p 80:80 --name vue-demo vue-falsework:0.0.1 
 ```
