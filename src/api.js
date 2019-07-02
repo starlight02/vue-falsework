@@ -78,7 +78,7 @@ Object.keys(apisConfig).forEach(key => {
                 config.data = parameter;
             }
         }
-        return Axios.request(config);
+        return axios.request(config);
     }
 
     apis[key] = request;
