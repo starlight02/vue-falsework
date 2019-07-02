@@ -10,9 +10,7 @@ const axios = Axios.create({
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
-    validateStatus: status => {
-        return (status >= 200 && status < 300) || status === 304;
-    }
+    validateStatus: status => ((status >= 200 && status < 300) || status === 304)
 });
 
 axios.interceptors.request.use(config => {
@@ -82,6 +80,7 @@ Object.keys(apisConfig).forEach(key => {
         }
         return Axios.request(config);
     }
+
     apis[key] = request;
 });
 
