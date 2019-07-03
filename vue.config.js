@@ -1,7 +1,8 @@
 module.exports = {
     runtimeCompiler: true,
     productionSourceMap: false,
-    // configureWebpack: config => {
+    publicPath:'./',
+// configureWebpack: config => {
     //     if (process.env.NODE_ENV === 'production') {
     //         // 为生产环境修改配置...
     //         return {}
