@@ -13,7 +13,7 @@ routeList.push({path: '/', redirect: {name: 'home'}});
 
 
 const router = new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: routeList
 });
 
