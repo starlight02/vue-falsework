@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import {Cookie} from './lib/utils';
 
 const CancelToken = Axios.CancelToken;
 
@@ -14,8 +15,7 @@ const axios = Axios.create({
 });
 
 axios.interceptors.request.use(config => {
-    /*FIXME*/
-    const token = 'qqq';
+    const token = Cookie.getCookie('token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
