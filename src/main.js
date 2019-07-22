@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import api from './api';
-// import './registerServiceWorker';
+import './registerServiceWorker';
 // import '@babel/polyfill';
 import np from 'nprogress';
 import 'nprogress/nprogress.css';
