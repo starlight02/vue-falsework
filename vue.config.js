@@ -1,14 +1,64 @@
+const debug = process.env.NODE_ENV !== 'production';
+
 module.exports = {
     runtimeCompiler: true,
-    productionSourceMap: false,
-    publicPath:'./',
-// configureWebpack: config => {
-    //     if (process.env.NODE_ENV === 'production') {
-    //         // 为生产环境修改配置...
-    //         return {}
-    //     } else {
-    //         // 为开发环境修改配置...
-    //         return {}
-    //     }
-    // }
+    publicPath: './',
+    productionSourceMap: debug,
+    css: {
+        extract: true,
+        sourceMap: false,
+        modules: false
+    },
+    chainWebpack: config => {
+        config.module
+        .rule('images')
+        .use('image-webpack-loader')
+        .loader('image-webpack-loader')
+        .options({
+            bypassOnDebug: true
+        })
+        .end()
+    },
+    configureWebpack: config => {
+        if (!debug) {
+            return {
+                optimization: {
+                    minimize: true,
+                    splitChunks: {
+                        cacheGroups: {
+                            vendor: {
+                                chunks: 'all',
+                                test: /node_modules/,
+                                name: 'vendor',
+                                minChunks: 1,
+                                maxInitialRequests: 5,
+                                minSize: 0,
+                                priority: 100
+                            },
+                            common: {
+                                chunks: 'all',
+                                test: /[\\/]src[\\/]js[\\/]/,
+                                name: 'common',
+                                minChunks: 2,
+                                maxInitialRequests: 5,
+                                minSize: 0,
+                                priority: 60
+                            },
+                            styles: {
+                                name: 'styles',
+                                test: /\.(sa|sc|c)ss$/,
+                                chunks: 'all',
+                                enforce: true
+                            },
+                            runtimeChunk: {
+                                name: 'manifest'
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            config.devtool = 'source-map';
+        }
+    }
 };

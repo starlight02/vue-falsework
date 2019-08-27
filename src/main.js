@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 window.np = np;
 window.api = api;
 
-new Vue({
+export default new Vue({
     router,
     render: h => h(App)
 }).$mount('#app');
