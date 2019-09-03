@@ -2,17 +2,17 @@
 一个基于 vue@cli 3 生成的 vue 2.x 模板项目
 
 ## 快速开始
-```
-yarn
+```bash
+yarn && yarn start
 ```
 
 ### 生产环境编译
-```
+```bash
 yarn build
 ```
 
 ### 检查并修复文件
-```
+```bash
 yarn lint
 ```
 
