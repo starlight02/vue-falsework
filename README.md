@@ -1,5 +1,5 @@
 # vue-template
-一个基于 vue@cli 3 生成的 vue 2.x 模板项目
+一个基于 vue@cli 3 生成的 vue 2.x 模板项目，无 TypeScript，非 PWA。
 
 ## 快速开始
 ```bash
