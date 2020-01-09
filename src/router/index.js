@@ -4,7 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 let routeList = [];
-const context = require.context(`./modules`, true, /routes\.js$/);
+const context = require.context('../modules', true, /routes\.js$/);
 context.keys().forEach(r => {
     const {default: routes} = context(r);
     routeList = routeList.concat(routes);

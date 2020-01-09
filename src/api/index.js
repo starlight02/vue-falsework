@@ -35,7 +35,7 @@ axios.interceptors.response.use(function (response) {
 let apisConfig = {};
 const apis = {};
 
-const context = require.context(`./modules`, true, /apis\.js$/);
+const context = require.context('../modules', true, /apis\.js$/);
 context.keys().forEach(key => {
     const {default: api} = context(key);
     apisConfig = Object.assign(apisConfig, api);

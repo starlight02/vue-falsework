@@ -6,8 +6,7 @@ module.exports = {
     productionSourceMap: debug,
     css: {
         extract: true,
-        sourceMap: false,
-        modules: false
+        sourceMap: debug
     },
     chainWebpack: config => {
         config.module
@@ -17,7 +16,9 @@ module.exports = {
         .options({
             bypassOnDebug: true
         })
-        .end()
+        .end();
+        //解决热更新
+        config.resolve.symlinks(true);
     },
     configureWebpack: config => {
         if (!debug) {
@@ -56,7 +57,7 @@ module.exports = {
                         }
                     }
                 }
-            }
+            };
         } else {
             config.devtool = 'source-map';
         }

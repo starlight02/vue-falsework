@@ -1,6 +1,6 @@
 {
   "name": "vue-template",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "author": {
     "name": "FETE",
@@ -8,30 +8,30 @@
   },
   "scripts": {
     "start": "vue-cli-service serve --open",
-    "start:test": "vue-cli-service serve --open ----mode test",
-    "build": "vue-cli-service build",
+    "start:test": "vue-cli-service serve --open --mode test",
+    "build": "vue-cli-service build --modern",
     "build:test": "vue-cli-service build --mode test",
     "lint": "vue-cli-service lint",
     "module": "node script/new-module.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "core-js": "^2.6.5",
+    "core-js": "^3.6.2",
     "nprogress": "^0.2.0",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-router": "^3.0.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
-    "babel-eslint": "^10.0.1",
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "image-webpack-loader": "^5.0.0",
+    "image-webpack-loader": "^6.0.0",
     "postcss-px-to-viewport": "^1.1.0",
-    "sass": "^1.18.0",
-    "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "sass": "^1.19.0",
+    "sass-loader": "^8.0.0",
+    "vue-template-compiler": "^2.6.11"
   }
 }
