@@ -9,14 +9,6 @@ module.exports = {
         sourceMap: debug
     },
     chainWebpack: config => {
-        config.module
-        .rule('images')
-        .use('image-webpack-loader')
-        .loader('image-webpack-loader')
-        .options({
-            bypassOnDebug: true
-        })
-        .end();
         //解决热更新
         config.resolve.symlinks(true);
     },
