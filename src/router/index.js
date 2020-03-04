@@ -6,14 +6,14 @@ Vue.use(Router);
 let routeList = [];
 const context = require.context('../modules', true, /routes\.js$/);
 context.keys().forEach(r => {
-    const {default: routes} = context(r);
+    const { default: routes } = context(r);
     routeList = routeList.concat(routes);
 });
-routeList.push({path: '/', redirect: {name: 'home'}});
+routeList.push({ path: '/', redirect: { name: 'home' } });
 
 
 const router = new Router({
-    // mode: 'history',
+    mode: 'history',
     routes: routeList
 });
 
