@@ -1,8 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
-import api from './api';
-// import '@babel/polyfill';
+import router from './plugins/router';
+import api from './plugins/api';
 import np from 'nprogress';
 import 'nprogress/nprogress.css';
 import './style/reset.css';
