@@ -1,3 +1,5 @@
+require('./script/get_code_version');
+
 const debug = process.env.NODE_ENV !== 'production';
 
 module.exports = {

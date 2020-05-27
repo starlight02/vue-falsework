@@ -1,0 +1,57 @@
+# created by FETE
+# email:1757176294@qq.com
+# time:20120-05-12 16:25
+
+#image: docker:dind
+#services:
+#  - docker:dind
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules
+    - dist
+
+"构建":
+  image: node:alpine
+  stage: build
+  script:
+    - apk add git
+    - yarn
+    - yarn build:test
+  only:
+    - /^feature\/[\S]{1,}$/
+    - develop
+
+"生产构建":
+  image: node:alpine
+  stage: build
+  script:
+    - yarn
+    - yarn build
+  only:
+    - master
+
+# 正式环境部署
+"部署":
+  stage: deploy
+  script:
+    - docker info
+    - docker ps -a
+  only:
+    - master
+
+# 非正式环境部署到 Gitlab Pages
+pages:
+  stage: deploy
+  script:
+    - rm -rf public
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - develop
