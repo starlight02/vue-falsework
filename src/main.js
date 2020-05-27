@@ -5,9 +5,13 @@ import api from './plugins/api';
 import np from 'nprogress';
 import 'nprogress/nprogress.css';
 import './style/reset.css';
+import { optionalChaining } from './lib/utils';
 
 Vue.config.productionTip = false;
 
+Vue.prototype.$$ = optionalChaining;
+
+window.appVersion = process.env.VUE_APP_VERSION;
 window.np = np;
 window.api = api;
 
