@@ -45,7 +45,7 @@ Object.keys(apisConfig).forEach(key => {
     const config = apisConfig[key];
 
     function request(restful, params) {
-        config.method = config.method || 'get';
+        config.method = config.method.toLowerCase() || 'get';
         let parameter = {};
         let query = {};
         if (config.restful) {
