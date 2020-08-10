@@ -1,17 +1,16 @@
 {
   "name": "vue-template",
-  "version": "0.4.0",
+  "version": "0.10.0",
   "private": true,
   "author": {
     "name": "FETE",
-    "email": "fete@kaguramea.me"
+    "email": "1757176294@qq.com"
   },
   "scripts": {
     "start": "vue-cli-service serve --open",
     "start:test": "vue-cli-service serve --open --mode test",
     "build": "vue-cli-service build --modern",
     "build:test": "vue-cli-service build --mode test",
-    "lint": "vue-cli-service lint",
     "module": "node script/new-module.js"
   },
   "dependencies": {
@@ -25,12 +24,8 @@
     "@babel/plugin-proposal-optional-chaining": "^7.10.0",
     "@types/nprogress": "^0.2.0",
     "@vue/cli-plugin-babel": "^4.3.1",
-    "@vue/cli-plugin-eslint": "^4.3.1",
     "@vue/cli-plugin-router": "^4.3.1",
     "@vue/cli-service": "^4.3.1",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^6.2.0",
     "postcss-px-to-viewport": "^1.1.0",
     "sass": "^1.26.0",
     "sass-loader": "^8.0.0",
